@@ -31,8 +31,8 @@
   <parent>XWiki.WebHome</parent>
   <author>xwiki:XWiki.Admin</author>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <date>1434451142000</date>
-  <contentUpdateDate>1434451142000</contentUpdateDate>
+  <date>1626269323000</date>
+  <contentUpdateDate>1626263982000</contentUpdateDate>
   <version>1.1</version>
   <title>$services.localization.render('admin.piwik')</title>
   <comment/>
@@ -40,20 +40,30 @@
   <syntaxId>xwiki/2.0</syntaxId>
   <hidden>true</hidden>
   <content>{{velocity output="false"}}
-#macro(savePiwikData $url $siteid $method $userTracking $multidomain $domain)
+#macro(savePiwikData $url $siteid $method $userTracking $multidomain $domain $multiwiki)
   #set ($piwikConfigDoc = $xwiki.getDocument('XWiki.PiwikConfig'))
   #set ($piwikObj = $piwikConfigDoc.getObject('XWiki.PiwikCode', true))
+  #set ($piwikCodeDoc = $xwiki.getDocument('XWiki.PiwikCode'))
+  #set ($piwikCodeUIX = $piwikCodeDoc.getObject('XWiki.UIExtensionClass'))
   #set ($discard = $piwikObj.set('url', $!url))
   #set ($discard = $piwikObj.set('siteid', $!siteid))
   #set ($discard = $piwikObj.set('method', $!method))
   #set ($discard = $piwikObj.set('userTracking', $!userTracking))
   #set ($discard = $piwikObj.set('multidomain', $!multidomain))
   #set ($discard = $piwikObj.set('domain', $!domain))
+  #set ($discard = $piwikObj.set('multiwiki', $!multiwiki))
   $piwikConfigDoc.save()
+  #set ($multiwiki = $piwikObj.getProperty('multiwiki').value)
+  #if($multiwiki==0)
+    #set($discard = $piwikCodeUIX.set('scope','wiki'))
+  #else
+    #set($discard = $piwikCodeUIX.set('scope','global'))
+  #end
+  #set($discard = $piwikCodeDoc.save())
 #end
 #if ($hasAdmin)
   #if ($request.action == 'save')
-    #savePiwikData($request.piwik_url $request.piwik_siteid $request.piwik_method $request.piwik_userTracking $request.piwik_multidomain $request.piwik_domain)
+    #savePiwikData($request.piwik_url $request.piwik_siteid $request.piwik_method $request.piwik_userTracking $request.piwik_multidomain $request.piwik_domain $request.piwik_multiwiki)
     #set($discard = $response.sendRedirect($doc.getURL($xcontext.action, $request.queryString)))
     #stop
   #end## save action
@@ -96,6 +106,7 @@ $UIDoc.getRenderedContent("{{velocity}}{{html wiki='false' clean='false'}}${code
 #set ($userTrackingPropertyClass = $piwikCodeClass.userTracking)##
 #set ($multidomainPropertyClass = $piwikCodeClass.multidomain)##
 #set ($domainPropertyClass = $piwikCodeClass.domain)##
+#set ($multiwikiPropertyClass = $piwikCodeClass.multiwiki)##
 
 {{html}}
 &lt;form action="" method="post" class="xform half"&gt;
@@ -142,6 +153,13 @@ $UIDoc.getRenderedContent("{{velocity}}{{html wiki='false' clean='false'}}${code
     &lt;dd&gt;
       $piwikConfigDoc.displayEdit($domainPropertyClass, 'piwik_', $piwikObj)
     &lt;/dd&gt;
+    &lt;dt&gt;
+      &lt;label for="piwik_account"&gt;$!multiwikiPropertyClass.translatedPrettyName&lt;/label&gt;
+      &lt;span class="xHint"&gt;$services.localization.render('admin.piwik.multiwiki.description', 'xhtml/1.0')&lt;/span&gt;
+    &lt;/dt&gt;
+    &lt;dd&gt;
+      $piwikConfigDoc.displayEdit($multiwikiPropertyClass, 'piwik_', $piwikObj)
+    &lt;/dd&gt;
   &lt;/dl&gt;
   &lt;p&gt;
     &lt;input type="hidden" name="action" value="save"/&gt;
@@ -155,8 +173,8 @@ $UIDoc.getRenderedContent("{{velocity}}{{html wiki='false' clean='false'}}${code
 {{/velocity}}</content>
   <attachment>
     <filename>piwik.svg</filename>
-    <author>xwiki:XWiki.Admin</author>
-    <date>1434442840000</date>
+    <author>XWiki.Admin</author>
+    <date>1626181452000</date>
     <version>1.1</version>
     <comment/>
     <content>PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJMYXllcl8xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIKCSB3aWR0aD0iMTcwLjY2NnB4IiBoZWlnaHQ9IjQ1LjcwNHB4IiB2aWV3Qm94PSIwIDAgMTcwLjY2NiA0NS43MDQiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDE3MC42NjYgNDUuNzA0IgoJIHhtbDpzcGFjZT0icHJlc2VydmUiPgo8cGF0aCBmaWxsPSIjRDQyQTFGIiBkPSJNMTA2Ljk5NSwxLjAxNmMtMi41Ny0wLjczOS01LjI1MSwwLjc1MS01Ljk4NywzLjMyOWwtNS41MzIsMTkuMzUxTDg5Ljk0Myw0LjM0NQoJYy0wLjU5Mi0yLjA3MS0yLjQ0MS0zLjQxNy00LjQ3Ny0zLjQ5MmMtMC4xMDMtMC4wMDktMC4yMDMtMC4wMDQtMC4zMDYtMC4wMDdjLTAuMTAyLDAuMDAzLTAuMjAzLTAuMDAzLTAuMzA2LDAuMDA3CgljLTIuMDM2LDAuMDc1LTMuODg1LDEuNDIxLTQuNDc3LDMuNDkybC01LjUwOSwxOS4yN2wtNS41MDktMTkuMjdjLTAuNzM3LTIuNTc4LTMuNDE4LTQuMDY4LTUuOTg3LTMuMzI5CgljLTIuNTcsMC43MzktNC4wNTYsMy40MjgtMy4zMTksNi4wMDVsMTAuMDc1LDM1LjI0YzAuNTgzLDIuMDM4LDIuMzg0LDMuMzc2LDQuMzgyLDMuNDljMC4xMjEsMC4wMTEsMC4yMzksMC4wMDYsMC4zNTksMC4wMDgKCWMwLjEyLTAuMDAyLDAuMjM4LDAuMDA0LDAuMzU5LTAuMDA4YzEuOTk4LTAuMTE0LDMuNzk5LTEuNDUxLDQuMzgyLTMuNDlsNS41NTEtMTkuNDE2bDUuNTUxLDE5LjQxNgoJYzAuNTg4LDIuMDU2LDIuNDE2LDMuMzk4LDQuNDM0LDMuNDkxYzAuMTExLDAuMDEsMC4yMTksMC4wMDUsMC4zMywwLjAwN2MwLjExLTAuMDAzLDAuMjE5LDAuMDAzLDAuMzMtMC4wMDcKCWMyLjAxOS0wLjA5MywzLjg0Ni0xLjQzNSw0LjQzNC0zLjQ5MWwxMC4wNzUtMzUuMjRDMTExLjA1LDQuNDQ0LDEwOS41NjQsMS43NTYsMTA2Ljk5NSwxLjAxNnoiLz4KPHBhdGggZmlsbD0iI0Q0MkExRiIgZD0iTTExNi41MDIsNDAuNDRjMCwyLjk3MiwyLjM1LDUuMzIyLDUuMzIyLDUuMzIyYzIuOTcyLDAsNS4zMjItMi4zNSw1LjMyMi01LjMyMlY2LjE0NwoJYzAtMi45NzItMi4zNS01LjMyMi01LjMyMi01LjMyMmMtMi45NzIsMC01LjMyMiwyLjM1LTUuMzIyLDUuMzIyVjQwLjQ0eiIvPgo8cGF0aCBmaWxsPSIjRDQyQTFGIiBkPSJNNDMuMzM0LDQwLjQ1N2MwLDIuOTcyLDIuMzUsNS4zMjIsNS4zMjIsNS4zMjJjMi45NzIsMCw1LjMyMi0yLjM1LDUuMzIyLTUuMzIyVjYuMTY0CgljMC0yLjk3Mi0yLjM1LTUuMzIyLTUuMzIyLTUuMzIyYy0yLjk3MiwwLTUuMzIyLDIuMzUtNS4zMjIsNS4zMjJWNDAuNDU3eiIvPgo8cGF0aCBmaWxsPSIjRDQyQTFGIiBkPSJNMTU1LjQwNiwyMy4xNTZsMTMuNzc5LTEzLjc3OWMxLjk3NC0xLjk3NCwxLjk3NC01LjA5NywwLTcuMDcxYy0xLjk3NC0xLjk3NC01LjA5Ny0xLjk3NC03LjA3MSwwCglsLTE2LjQ0OCwxNi40NDhWNi4xNDdjMC0yLjk3Mi0yLjM1LTUuMzIyLTUuMzIyLTUuMzIyYy0yLjk3MiwwLTUuMzIyLDIuMzUtNS4zMjIsNS4zMjJWNDAuNDRjMCwyLjk3MiwyLjM1LDUuMzIyLDUuMzIyLDUuMzIyCgljMi45NzIsMCw1LjMyMi0yLjM1LDUuMzIyLTUuMzIydi03LjU0NGwyLjY2OS0yLjY2OWwxMy42MTgsMTMuODU3YzEuOTU3LDEuOTkyLDUuMDc5LDIuMDE5LDcuMDcxLDAuMDYyCgljMS45OTItMS45NTcsMi4wMTktNS4wNzksMC4wNjItNy4wNzFMMTU1LjQwNiwyMy4xNTZ6Ii8+CjxwYXRoIGZpbGw9IiNENDJBMUYiIGQ9Ik0zNy4yOTIsMTYuODE2YzAtOC41OC02Ljc4Ny0xNS41NTctMTUuMjgzLTE1LjlsMC4wMDctMC4wMzNINS4zMjJDMi4zNSwwLjg4MywwLDMuMjMzLDAsNi4yMDV2MzQuMTc3CgljMCwyLjk3MiwyLjM1LDUuMzIyLDUuMzIyLDUuMzIyYzIuOTcyLDAsNS4zMjItMi4zNSw1LjMyMi01LjMyMnYtNy42M2gxMS4zNzFsLTAuMDA3LTAuMDM2CglDMzAuNTA1LDMyLjM3MiwzNy4yOTIsMjUuMzk2LDM3LjI5MiwxNi44MTZ6IE0yMC4yOTYsMjMuMjg0bDAtMC4wMDJoLTkuNjUxVjEwLjQ5MWg5LjQ2NGMzLjUzNSwwLDYuNDAxLDIuODY2LDYuNDAxLDYuNDAxCglDMjYuNTEsMjAuMzY0LDIzLjc0NCwyMy4xODQsMjAuMjk2LDIzLjI4NHoiLz4KPC9zdmc+Cg==</content>
@@ -219,6 +237,20 @@ $UIDoc.getRenderedContent("{{velocity}}{{html wiki='false' clean='false'}}${code
       <validationRegExp/>
       <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
     </multidomain>
+    <multiwiki>
+      <customDisplay/>
+      <defaultValue/>
+      <disabled>0</disabled>
+      <displayFormType>select</displayFormType>
+      <displayType/>
+      <name>multiwiki</name>
+      <number>7</number>
+      <prettyName>Multiwiki</prettyName>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+    </multiwiki>
     <siteid>
       <customDisplay/>
       <disabled>0</disabled>
@@ -541,7 +573,7 @@ $UIDoc.getRenderedContent("{{velocity}}{{html wiki='false' clean='false'}}${code
         <prettyName>Extension Scope</prettyName>
         <relationalStorage>0</relationalStorage>
         <separator> </separator>
-        <separators>|, </separators>
+        <separators> ,|</separators>
         <size>1</size>
         <unmodifiable>0</unmodifiable>
         <values>wiki=Current Wiki|user=Current User|global=Global</values>
@@ -555,12 +587,26 @@ $UIDoc.getRenderedContent("{{velocity}}{{html wiki='false' clean='false'}}${code
 #macro(loadMatomoConfig $configPath)
 #set($piwikDoc = $xwiki.getDocument($configPath))
 #set($piwikObj = $piwikDoc.getObject('XWiki.PiwikCode'))
+#set($piwikCodeDoc = $xwiki.getDocument('XWiki.PiwikCode'))
+#set($piwikCodeUIX = $piwikCodeDoc.getObject('XWiki.UIExtensionClass'))
 #if($piwikObj)
   #set($piwikUrl = $piwikObj.getProperty('url').value)
   #set($siteid = $piwikObj.getProperty('siteid').value)
   #set($userTracking = $piwikObj.getProperty('userTracking').value)
   #set($multidomain = $piwikObj.getProperty('multidomain').value)
   #set($domain = $piwikObj.getProperty('domain').value)
+  #set($multiwiki = $piwikObj.getProperty('multiwiki').value)
+  #if(!$multiwiki &amp;&amp; $xwiki.getWikiNames().size() &gt; 1)
+    #set($ok = $piwikObj.set('multiwiki',1))
+    #set($ok = $piwikDoc.save())
+    #set($ok = $piwikCodeUIX.set('scope','global'))
+    #set($ok = $piwikCodeDoc.save())
+  #elseif(!$multiwiki)
+    #set($multiwiki = $piwikObj.set('multiwiki',0))
+    #set($ok = $piwikDoc.save())
+    #set($ok = $piwikCodeUIX.set('scope','wiki'))
+    #set($ok = $piwikCodeDoc.save())
+  #end
 #end
 #end
 #loadMatomoConfig('XWiki.PiwikConfig')
@@ -568,17 +614,21 @@ $UIDoc.getRenderedContent("{{velocity}}{{html wiki='false' clean='false'}}${code
   #loadMatomoConfig('xwiki:XWiki.PiwikConfig')
 #end
 #if("$!{siteid}" != "" &amp;&amp; "$!{piwikUrl}" != "")
-var _paq = _paq || [];
-#if($multidomain==1)
-  _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
-  _paq.push(["setCookieDomain", "*.${domain}"]);
-  _paq.push(["setDomains", "*.${domain}"]);
-#end
-#if($userTracking==1)
-  _paq.push(['setCustomVariable', 1, "user", "${escapetool.javascript($xcontext.user)}", "visit"]);
-  _paq.push(['setCustomVariable', 1, "user", "${escapetool.javascript($xcontext.user)}", "page"]);
-  _paq.push(['setUserId', "${escapetool.javascript($xcontext.user)}"]);
- #end
+  var _paq = _paq || [];
+  #if($multidomain==1)
+    _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+    _paq.push(["setCookieDomain", "*.${domain}"]);
+    _paq.push(["setDomains", "*.${domain}"]);
+  #end
+  #if($userTracking==1 &amp;&amp; $multiwiki==1)
+    _paq.push(['setCustomVariable', 1, "user", "${escapetool.javascript($xcontext.getUserReference())}", "visit"]);
+    _paq.push(['setCustomVariable', 1, "user", "${escapetool.javascript($xcontext.getUserReference())}", "page"]);
+    _paq.push(['setUserId', "${escapetool.javascript($xcontext.getUserReference())}"]);
+  #elseif($userTracking==1)
+    _paq.push(['setCustomVariable', 1, "user", "${escapetool.javascript($xcontext.user)}", "visit"]);
+    _paq.push(['setCustomVariable', 1, "user", "${escapetool.javascript($xcontext.user)}", "page"]);
+    _paq.push(['setUserId', "${escapetool.javascript($xcontext.user)}"]);
+  #end
   _paq.push(['trackPageView']);
   _paq.push(['enableLinkTracking']);
   (function() {

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!--
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
@@ -19,21 +20,24 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<xwikidoc version="1.1">
+<xwikidoc>
   <web>XWiki</web>
   <name>PiwikTranslations</name>
   <language>fr</language>
   <defaultLanguage>en</defaultLanguage>
   <translation>1</translation>
-  <creator>xwiki:XWiki.Admin</creator>
-  <creationDate>1388530800000</creationDate>
   <parent>XWiki.PiwikCode</parent>
+  <creator>xwiki:XWiki.Admin</creator>
   <author>xwiki:XWiki.Admin</author>
+  <customClass/>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <date>1434457733000</date>
-  <contentUpdateDate>1434457733000</contentUpdateDate>
+  <creationDate>1388530800000</creationDate>
+  <date>1626251557000</date>
+  <contentUpdateDate>1626251557000</contentUpdateDate>
   <version>1.1</version>
   <title>Piwik Translation File</title>
+  <defaultTemplate/>
+  <validationScript/>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.1</syntaxId>
@@ -55,5 +59,6 @@ admin.piwik.siteid.description=L'ID du site à utiliser (cette valeur est nécé
 admin.piwik.userTracking.description=Activer le tracking des utilisateurs (compatible uniquement avec le mode Javascript)
 admin.piwik.multidomain.description=Activer le tracking Multi-domaine (*.mydomain.com)
 admin.piwik.domain.description=Specifier le domaine pour le tracking multidomain (ex: mydomain.com)
-admin.piwik.trackingcode=Code de Tracking qui sera inseré</content>
+admin.piwik.trackingcode=Code de Tracking qui sera inseré
+admin.piwik.multiwiki.description=Activer le tracking Multi-wiki</content>
 </xwikidoc>
