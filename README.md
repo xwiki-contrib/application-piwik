@@ -7,7 +7,7 @@ Extension that adds Piwik tracking to an XWiki instance
 * [Issue Tracker](https://jira.xwiki.org/browse/XMATOMO)
 * Communication: [Mailing List](http://dev.xwiki.org/xwiki/bin/view/Community/MailingLists>), [IRC](http://dev.xwiki.org/xwiki/bin/view/Community/IRC>)
 * [Development Practices](http://dev.xwiki.org/xwiki/bin/view/Community/DevelopmentPractices)
-* Minimal XWiki version supported: XWiki 5.4.4
+* Minimal XWiki version supported: XWiki 6.4
 * License: LGPL 2.1.
 * [Translations](http://l10n.xwiki.org/xwiki/bin/view/Contrib/PiwikApplication)
 * Sonar Dashboard: N/A
