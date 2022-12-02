@@ -1,1 +1,65 @@
+<?xml version="1.1" encoding="UTF-8"?>
 
+<!--
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<xwikidoc locale="ja">
+  <web>XWiki</web>
+  <name>PiwikTranslations</name>
+  <language>ja</language>
+  <defaultLanguage>en</defaultLanguage>
+  <translation>1</translation>
+  <parent>XWiki.PiwikCode</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1388530800000</creationDate>
+  <date>1626251538000</date>
+  <contentUpdateDate>1626251533000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Piwik Translation File</title>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>plain/1.0</syntaxId>
+  <hidden>true</hidden>
+  <content>admin.piwik=Matomo
+admin.piwik.notrunning=Matomoトラッキングは動作していません。"Matomo URL"と"サイトID"を記入してください。
+admin.piwik.running=Matomo trackingは動作しています。
+XWiki.PiwikCode_method=追跡方法
+XWiki.PiwikCode_url=Matomo URL
+XWiki.PiwikCode_siteid=サイトID
+XWiki.PiwikCode_userTracking=ユーザーの追跡
+XWiki.PiwikCode_multidomain=複数のドメインの追跡
+XWiki.PiwikCode_domain=ドメインのURL
+XWiki.PiwikCode_method_image=画像による追跡
+XWiki.PiwikCode_method_javascript=Javascriptによる追跡
+admin.piwik.method.description=追跡用コードを挿入するにはJavascriptまたは画像を使用してください
+admin.piwik.url.description=追跡コードのURL（matomo.phpの場所。例：https://matomo.mydomain.com/）
+admin.piwik.siteid.description=使用するサイトID（追跡を有効にするのに必要です）
+admin.piwik.userTracking.description=ユーザーIDの追跡を有効にする（Javascriptによる追跡にのみ対応)
+admin.piwik.multidomain.description=複数のドメインの追跡を有効にする（*.mydomain.com）
+admin.piwik.domain.description=複数のドメインの追跡に使用するドメインを指定してください（例：mydomain.com）
+admin.piwik.trackingcode=埋め込む追跡用コード
+admin.piwik.multiwiki.description=複数のウィキの追跡を有効にする
+</content>
+</xwikidoc>
