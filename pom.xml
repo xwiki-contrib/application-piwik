@@ -43,6 +43,14 @@
       <id>ldubost</id>
       <name>Ludovic Dubost</name>
     </developer>
+    <developer>
+      <id>candrei</id>
+      <name>Cami Andrei</name>
+    </developer>
+    <developer>
+      <id>ppantiru</id>
+      <name>Paul Pantiru</name>
+    </developer>
   </developers>
   <properties>
     <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
