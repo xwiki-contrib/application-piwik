@@ -614,6 +614,7 @@ $UIDoc.getRenderedContent("{{velocity}}{{html wiki='false' clean='false'}}${code
   #loadMatomoConfig('xwiki:XWiki.PiwikConfig')
 #end
 #if("$!{siteid}" != "" &amp;&amp; "$!{piwikUrl}" != "")
+  #set($isSearch = $doc.fullName == "Main.Search" &amp;&amp; "$!request.text" != '')
   var _paq = _paq || [];
   #if($multidomain==1)
     _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
@@ -638,6 +639,21 @@ $UIDoc.getRenderedContent("{{velocity}}{{html wiki='false' clean='false'}}${code
     var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0]; g.type='text/javascript';
     g.defer=true; g.async=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
   })();
+  #if ($isSearch)
+  document.observe('xwiki:dom:loaded', function() {
+    var searchCount = 0
+    var searchResults = ${escapetool.d}${escapetool.d}('.paginationFilter .totalResultsNo')
+    if (searchResults.length &gt; 0) {
+      searchCount = parseInt(searchResults[0].innerHTML,10)
+    } else {
+      ## special case for "no result" and "one result only": no paging shown
+      ## instead just count the displayed results
+      searchResults = ${escapetool.d}${escapetool.d}('.search-results .search-result')
+      searchCount = searchResults.length
+    }
+    _paq.push(['trackSiteSearch', "$!{escapetool.javascript($request.text)}", false, searchCount]);
+  })
+  #end
 #end
 &lt;/script&gt;
 {{/html}}
