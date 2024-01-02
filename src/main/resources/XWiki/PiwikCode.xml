@@ -583,7 +583,6 @@ $UIDoc.getRenderedContent("{{velocity}}{{html wiki='false' clean='false'}}${code
     <property>
       <content>{{velocity}}
 {{html clean="false"}}
-&lt;script type="text/javascript"&gt;
 #macro(loadMatomoConfig $configPath)
 #set($piwikDoc = $xwiki.getDocument($configPath))
 #set($piwikObj = $piwikDoc.getObject('XWiki.PiwikCode'))
@@ -615,6 +614,7 @@ $UIDoc.getRenderedContent("{{velocity}}{{html wiki='false' clean='false'}}${code
 #end
 #if("$!{siteid}" != "" &amp;&amp; "$!{piwikUrl}" != "")
   #set($isSearch = $doc.fullName == "Main.Search" &amp;&amp; "$!request.text" != '')
+&lt;script type="text/javascript"&gt;
   var _paq = _paq || [];
   #if($multidomain==1)
     _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
@@ -654,8 +654,8 @@ $UIDoc.getRenderedContent("{{velocity}}{{html wiki='false' clean='false'}}${code
     _paq.push(['trackSiteSearch', "$!{escapetool.javascript($request.text)}", false, searchCount]);
   })
   #end
-#end
 &lt;/script&gt;
+#end
 {{/html}}
 {{/velocity}}</content>
     </property>
