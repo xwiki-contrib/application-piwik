@@ -93,7 +93,7 @@ $UIDoc.getRenderedContent("{{velocity}}{{html wiki='false' clean='false'}}${code
 {{/velocity}}
 
 {{velocity}}
-#if ($doc.name != 'XWikiPreferences' &amp;&amp; $xcontext.action == 'view')
+#if ($doc.documentReference.name != 'XWikiPreferences' &amp;&amp; $xcontext.action == 'view')
   $response.sendRedirect($xwiki.getURL('XWiki.XWikiPreferences', 'admin', 'section=piwik'))
 #end
 #set ($piwikConfigDoc = $xwiki.getDocument('XWiki.PiwikConfig'))
