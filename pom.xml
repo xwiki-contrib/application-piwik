@@ -53,7 +53,7 @@
     </developer>
   </developers>
   <properties>
-    <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
+    <xwiki.release.jira.skip>true</xwiki.release.jira.skip>
     <xwiki.issueManagement.jira.id>XMATOMO</xwiki.issueManagement.jira.id>
   </properties>
   <dependencies>
