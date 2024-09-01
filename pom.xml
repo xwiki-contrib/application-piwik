@@ -82,4 +82,15 @@
       <scope>runtime</scope>
     </dependency>
   </dependencies>
+  <distributionManagement>
+    <site>
+      <id>nexus.xwiki.org</id>
+      <url>dav:https://nexus.xwiki.org/nexus/content/sites/site/</url>
+    </site>
+    <snapshotRepository>
+      <id>nexus-snapshots.xwiki.org</id>
+      <name>XWiki Maven Development Repository for Snapshots</name>
+      <url>https://nexus-snapshots.xwiki.org/repository/snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
 </project>
